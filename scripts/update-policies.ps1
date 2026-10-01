@@ -5,9 +5,10 @@ $state = Get-Content -Raw (Join-Path $PrivateRoot 'config\azure-state.json') | C
 $parameters = Get-Content -Raw (Join-Path $PrivateRoot 'config\parameters.json') | ConvertFrom-Json
 $group = az group show --subscription $state.subscriptionId --name $state.resourceGroup --output json | ConvertFrom-Json
 if ($group.tags.purpose -ne $state.purpose -or $group.tags.owner -ne 'yukurash') { throw 'Dedicated group verification failed.' }
-$deployment = az deployment group show --subscription $state.subscriptionId --resource-group $state.resourceGroup --name $state.deployment --output json | ConvertFrom-Json
-if ($deployment.properties.provisioningState -ne 'Succeeded' -or $deployment.properties.outputs.apimName.value -ne $state.apimName) {
-    throw 'Initial deployment is not ready or does not match the configured service.'
+$serviceUri = "https://management.azure.com/subscriptions/$($state.subscriptionId)/resourceGroups/$($state.resourceGroup)/providers/Microsoft.ApiManagement/service/$($state.apimName)?api-version=2024-05-01"
+$service = az rest --method get --url $serviceUri --output json | ConvertFrom-Json
+if ($service.properties.provisioningState -ne 'Succeeded' -or $service.tags.purpose -ne $state.purpose) {
+    throw 'The dedicated APIM service is not ready.'
 }
 $quota = if ($parameters.parameters.quotaTokens) { [int]$parameters.parameters.quotaTokens.value } else { 1200 }
 $rate = if ($parameters.parameters.rateTokens) { [int]$parameters.parameters.rateTokens.value } else { 1200 }

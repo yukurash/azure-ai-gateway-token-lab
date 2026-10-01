@@ -2,9 +2,12 @@ param([Parameter(Mandatory)][string]$PrivateRoot)
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 $state = Get-Content -Raw (Join-Path $PrivateRoot 'config\azure-state.json') | ConvertFrom-Json
-$deployment = az deployment group show --subscription $state.subscriptionId --resource-group $state.resourceGroup --name $state.deployment --output json | ConvertFrom-Json
-if ($deployment.properties.provisioningState -ne 'Succeeded') { throw 'Deployment is not ready.' }
-$endpoint = $deployment.properties.outputs.gatewayUrl.value
+$serviceUri = "https://management.azure.com/subscriptions/$($state.subscriptionId)/resourceGroups/$($state.resourceGroup)/providers/Microsoft.ApiManagement/service/$($state.apimName)?api-version=2024-05-01"
+$service = az rest --method get --url $serviceUri --output json | ConvertFrom-Json
+if ($service.properties.provisioningState -ne 'Succeeded' -or $service.tags.purpose -ne $state.purpose) {
+    throw 'The dedicated APIM service is not ready.'
+}
+$endpoint = $service.properties.gatewayUrl
 $secretsUri = "https://management.azure.com/subscriptions/$($state.subscriptionId)/resourceGroups/$($state.resourceGroup)/providers/Microsoft.ApiManagement/service/$($state.apimName)/subscriptions/lab-client/listSecrets?api-version=2024-05-01"
 $keys = az rest --method post --url $secretsUri --output json | ConvertFrom-Json
 if ([string]::IsNullOrWhiteSpace($keys.primaryKey)) { throw 'No client subscription key returned.' }
