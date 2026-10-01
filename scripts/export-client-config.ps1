@@ -21,5 +21,6 @@ $rate = if ($parameters.parameters.rateTokens) { $parameters.parameters.rateToke
     createdAt = $state.createdAt
     quotaTokens = $quota
     rateTokens = $rate
+    restrictClientIp = if ($parameters.parameters.restrictClientIp) { [bool]$parameters.parameters.restrictClientIp.value } else { $true }
 } | ConvertTo-Json | Set-Content -Encoding utf8 (Join-Path $PrivateRoot 'config\client.json')
 Write-Output 'Client configuration written to private storage. No credentials printed.'

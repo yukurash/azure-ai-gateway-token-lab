@@ -3,6 +3,7 @@ import { callModel, classifyResponse } from "../src/http.js";
 import type { Config, RequestSpec } from "../src/types.js";
 
 const config: Config = {
+  restrictClientIp: true,
   gatewayUrl: "https://example.invalid", subscriptionKey: "test-only-not-a-secret",
   apiVersion: "test", createdAt: "2026-01-01T00:00:00Z", quotaTokens: 1200, rateTokens: 1200,
 };

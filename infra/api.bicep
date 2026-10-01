@@ -4,6 +4,7 @@ param kind string
 param estimate bool
 param backendUrl string
 param allowedIp string
+param restrictClientIp bool = true
 param quotaTokens int
 param rateTokens int
 
@@ -28,7 +29,8 @@ resource api 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
 var quota = 'token-quota="${quotaTokens}" token-quota-period="Hourly" remaining-quota-tokens-header-name="x-lab-remaining"'
 var rate = 'tokens-per-minute="${rateTokens}" remaining-tokens-header-name="x-lab-remaining"'
 var limit = '<llm-token-limit id="lab-token-limit" counter-key="@(&quot;${variant}:&quot; + (string)context.Variables[&quot;lab-counter&quot;])" ${kind == 'quota' ? quota : rate} estimate-prompt-tokens="${estimate ? 'true' : 'false'}" tokens-consumed-header-name="x-lab-consumed" />'
-var policy = replace(replace(loadTextContent('policies/gateway.xml'), '__ALLOWED_IP__', allowedIp), '__LIMIT_POLICY__', kind == 'baseline' ? '' : limit)
+var ipFilter = '<ip-filter action="allow" id="lab-ip-filter"><address>${allowedIp}</address></ip-filter>'
+var policy = replace(replace(loadTextContent('policies/gateway.xml'), '__IP_FILTER__', restrictClientIp ? ipFilter : ''), '__LIMIT_POLICY__', kind == 'baseline' ? '' : limit)
 
 resource policies 'Microsoft.ApiManagement/service/apis/policies@2024-05-01' = {
   parent: api

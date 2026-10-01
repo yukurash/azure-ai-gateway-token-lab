@@ -46,6 +46,7 @@ export interface RequestRecord {
 }
 export type PublicRecord = Omit<RequestRecord, "rawBody" | "rawHeaders" | "retryAfter">;
 export interface Config {
+  restrictClientIp: boolean;
   gatewayUrl: string;
   subscriptionKey: string;
   apiVersion: string;

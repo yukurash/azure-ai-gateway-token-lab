@@ -4,6 +4,7 @@ param location string = resourceGroup().location
 param suffix string
 param publisherEmail string
 param allowedIp string
+param restrictClientIp bool = true
 param quotaTokens int = 1200
 param rateTokens int = 1200
 param modelCapacity int = 1000
@@ -91,6 +92,7 @@ module apis 'api.bicep' = [for variant in variants: {
     estimate: variant.estimate
     backendUrl: '${openai.properties.endpoint}openai/deployments/${model.name}'
     allowedIp: allowedIp
+    restrictClientIp: restrictClientIp
     quotaTokens: quotaTokens
     rateTokens: rateTokens
   }

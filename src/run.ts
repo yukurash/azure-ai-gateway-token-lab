@@ -15,12 +15,13 @@ function configFrom(value: unknown): Config {
       typeof value.subscriptionKey !== "string" || value.subscriptionKey.length < 16 ||
       typeof value.apiVersion !== "string" || typeof value.createdAt !== "string" ||
       !Number.isFinite(Date.parse(value.createdAt)) || !nonnegativeInteger(value.quotaTokens) ||
-      value.quotaTokens === 0 || !nonnegativeInteger(value.rateTokens) || value.rateTokens === 0) {
+      value.quotaTokens === 0 || !nonnegativeInteger(value.rateTokens) || value.rateTokens === 0 ||
+      typeof value.restrictClientIp !== "boolean") {
     throw new Error("Invalid private experiment configuration");
   }
   return { gatewayUrl: value.gatewayUrl, subscriptionKey: value.subscriptionKey,
     apiVersion: value.apiVersion, createdAt: value.createdAt,
-    quotaTokens: value.quotaTokens, rateTokens: value.rateTokens };
+    quotaTokens: value.quotaTokens, rateTokens: value.rateTokens, restrictClientIp: value.restrictClientIp };
 }
 const [privateArgument, profile] = process.argv.slice(2);
 if (!privateArgument || !profile) throw new Error("Usage: node dist/src/run.js PRIVATE_ROOT pilot|control|quota|rate");
@@ -69,7 +70,8 @@ try {
     dirty: Boolean(dirty), model: "gpt-4.1-mini", modelVersion: "2025-04-14",
     region: "japaneast", gateway: "Developer classic (1 unit)",
     apiVersion: config.apiVersion, quotaTokens: config.quotaTokens,
-    rateTokens: config.rateTokens, request: requestBody(true), scenarios: matrix,
+    rateTokens: config.rateTokens, restrictClientIp: config.restrictClientIp,
+    request: requestBody(true), scenarios: matrix,
   };
   writeFileSync(path.join(runDir, "manifest.json"), JSON.stringify(manifest, null, 2));
   let invalid = 0;
@@ -96,6 +98,13 @@ try {
   }
   writeFileSync(path.join(runDir, "completion.json"), JSON.stringify({ completed: true, invalidTrials: invalid }));
   console.log(`Saved private run: ${runId}`);
+} catch (error) {
+  writeFileSync(path.join(runDir, "completion.json"), JSON.stringify({
+    completed: false, error: error instanceof Error ? error.message : String(error),
+  }));
+  console.error(error);
+  console.error(`Saved incomplete private run: ${runId}`);
+  process.exitCode = 1;
 } finally {
   closeSync(lock);
   unlinkSync(lockFile);

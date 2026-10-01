@@ -34,6 +34,10 @@ Node.js 24、PowerShell 7、Azure CLIを使います。`$private`にはリポジ
 
 デプロイが成功したら、クライアント設定を非公開の保存先に書き出します。ポリシー更新用のスクリプトは`update-policies.ps1`です。APIM本体は再作成しません。
 
+プロキシ経由では、IP確認サービスとAPIMで送信元IPが異なる場合があります。APIM向けの送信元が分かっていれば、作成時に`-AllowedIp`で指定できます。`lab-ip-filter`による403が出た場合は、APIMのトレースで送信元を確認してください。非公開パラメータの`allowedIp`を直し、ポリシーを更新します。IP制限や認証を外して回避する手順ではありません。
+
+IP制限は既定で有効です。今回の短時間検証に限り、所有者の承認を得て非公開パラメータの`restrictClientIp`を`false`にします。検証用キーによる認証と、モデル側のマネージドID認証は維持します。変更の有無は実験マニフェストにも記録する設計です。
+
 ```powershell
 .\scripts\export-client-config.ps1 -PrivateRoot $private
 npm run build

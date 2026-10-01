@@ -56,6 +56,7 @@ for (const runId of runIds) {
   profiles.add(profile);
   const expected = scenarios(profile);
   const quota = positive(manifest.quotaTokens);
+  if (typeof manifest.restrictClientIp !== "boolean") throw new Error("Missing network configuration");
   const records = lines(path.join(directory, "requests.jsonl")).map(parseRecord).map(sanitize);
   if (records.some(record => record.experimentId !== runId)) throw new Error("Experiment ID mismatch");
   allRecords.push(...records);
@@ -118,7 +119,7 @@ for (const runId of runIds) {
     sourceCommit: text(manifest.sourceCommit), model: text(manifest.model),
     modelVersion: text(manifest.modelVersion), region: text(manifest.region),
     gateway: text(manifest.gateway), apiVersion: text(manifest.apiVersion),
-    quotaTokens: quota, rateTokens: positive(manifest.rateTokens),
+    quotaTokens: quota, rateTokens: positive(manifest.rateTokens), restrictClientIp: manifest.restrictClientIp,
     scenarios: expected,
   });
 }

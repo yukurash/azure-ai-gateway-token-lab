@@ -12,6 +12,8 @@ if ($service.properties.provisioningState -ne 'Succeeded' -or $service.tags.purp
 }
 $quota = if ($parameters.parameters.quotaTokens) { [int]$parameters.parameters.quotaTokens.value } else { 1200 }
 $rate = if ($parameters.parameters.rateTokens) { [int]$parameters.parameters.rateTokens.value } else { 1200 }
+$restrictClientIp = if ($parameters.parameters.restrictClientIp) { [bool]$parameters.parameters.restrictClientIp.value } else { $true }
+if (-not $restrictClientIp) { Write-Warning 'IP restriction explicitly disabled in private parameters. Subscription-key authentication remains required.' }
 $template = Join-Path (Split-Path $PSScriptRoot -Parent) 'infra\api.bicep'
 $variants = @('baseline','quota-off','quota-on','rate-off','rate-on')
 foreach ($variant in $variants) {
@@ -26,6 +28,7 @@ foreach ($variant in $variants) {
         estimate = $variant.EndsWith('-on')
         backendUrl = $api.properties.serviceUrl
         allowedIp = $parameters.parameters.allowedIp.value
+        restrictClientIp = $restrictClientIp
         quotaTokens = $quota
         rateTokens = $rate
     }

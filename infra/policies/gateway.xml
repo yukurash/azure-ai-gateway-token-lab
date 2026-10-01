@@ -1,9 +1,7 @@
 <policies>
   <inbound>
     <base />
-    <ip-filter action="allow" id="lab-ip-filter">
-      <address>__ALLOWED_IP__</address>
-    </ip-filter>
+    __IP_FILTER__
     <choose>
       <when condition="@(!System.Text.RegularExpressions.Regex.IsMatch(context.Request.Headers.GetValueOrDefault(&quot;x-lab-counter&quot;, &quot;&quot;), &quot;^[a-z0-9-]{8,80}$&quot;))">
         <return-response>

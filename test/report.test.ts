@@ -16,7 +16,7 @@ function fixture(): { root: string; privateRoot: string; runId: string; run: str
   const run = path.join(privateRoot, "runs", runId);
   mkdirSync(run, { recursive: true });
   writeFileSync(path.join(run, "manifest.json"), JSON.stringify({
-    dirty: false, profile: "control", createdAt: "2026-01-01T00:00:00.000Z",
+    dirty: false, restrictClientIp: true, profile: "control", createdAt: "2026-01-01T00:00:00.000Z",
     sourceCommit: "a".repeat(40), model: "test-model", modelVersion: "test-version",
     region: "test-region", gateway: "test-tier", apiVersion: "test-version",
     quotaTokens: 1200, rateTokens: 1200, privateField: "must-not-be-exported",

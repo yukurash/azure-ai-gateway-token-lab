@@ -34,6 +34,10 @@ Use Node.js 24, PowerShell 7 and Azure CLI. Set `$private` to a directory outsid
 
 Once deployment succeeds, export the client configuration to private storage. To update API policies without redeploying the APIM service, use `update-policies.ps1`.
 
+With destination-dependent proxies, the IP lookup service and APIM can observe different source addresses. Supply `-AllowedIp` during preparation if the APIM-facing egress address is known. If `lab-ip-filter` rejects a call with 403, use APIM tracing to determine the source address, update `allowedIp` in the private parameters and redeploy the policies. Do not disable authentication or the IP restriction.
+
+IP restriction is enabled by default. For this short-lived experiment only, the owner explicitly approved setting the private `restrictClientIp` parameter to `false`. Subscription-key authentication and managed-identity authentication to the model remain enabled. The run manifest records this exception.
+
 ```powershell
 .\scripts\export-client-config.ps1 -PrivateRoot $private
 npm run build
