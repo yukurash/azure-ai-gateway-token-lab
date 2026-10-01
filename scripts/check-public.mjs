@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 
 const files = execFileSync("git", ["ls-files", "-z"], { encoding: "utf8" }).split("\0").filter(Boolean);
-const allowed = /^(README(?:\.en)?\.md|AGENTS\.md|\.gitignore|package(?:-lock)?\.json|tsconfig\.json|\.github\/workflows\/ci\.yml|(?:infra|src|test|experiments|results|scripts)\/)/;
+const allowed = /^(README(?:\.en)?\.md|AGENTS\.md|\.gitignore|\.gitattributes|package(?:-lock)?\.json|tsconfig\.json|\.github\/workflows\/ci\.yml|(?:infra|src|test|experiments|results|scripts)\/)/;
 const privatePath = /(?:^|\/)(?:article|articles|private|raw|runs|node_modules|dist)(?:\/|$)|(?:\.local\.|\.bicepparam$|\.pem$|\.key$|\.log$)/i;
 const forbidden = [
   /\/subscriptions\/[0-9a-f]{8}-[0-9a-f-]{27,}/i,

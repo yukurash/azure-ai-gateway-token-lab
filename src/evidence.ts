@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { isObject, nonnegativeInteger, type PublicRecord, type RequestRecord } from "./types.js";
 
 function string(value: unknown): string {
@@ -83,11 +84,42 @@ export function summarize(records: PublicRecord[], quota: number): {
     if (record.usage) observedTokens += record.usage.total;
     else if (!(record.origin === "apim-limit" && record.rejectedBeforeBackend)) complete = false;
   }
+
   const overshoot = complete ? Math.max(0, observedTokens - quota) : null;
   return {
     complete, observedTokens, totalTokens: complete ? observedTokens : null,
     overshoot, overshootRatio: overshoot === null ? null : overshoot / quota,
     accepted: records.filter(record => record.status === 200).length,
     rejected: records.filter(record => record.origin === "apim-limit").length,
+  };
+}
+
+export interface AggregateTrial {
+  scenarioId: string;
+  profile: string;
+  valid: boolean;
+  overshoot: number | null;
+  totalTokens: number | null;
+}
+export function aggregate(records: PublicRecord[], trials: AggregateTrial[], requestsJsonl: string) {
+  const groups = [...new Set(trials.filter(trial => trial.profile === "quota").map(trial => trial.scenarioId))].map(scenarioId => {
+    const group = trials.filter(trial => trial.scenarioId === scenarioId);
+    const valid = group.filter(trial => trial.valid && trial.overshoot !== null);
+    const values = valid.map(trial => trial.overshoot!).sort((a, b) => a - b);
+    const middle = Math.floor(values.length / 2);
+    return {
+      scenarioId, trials: group.length, validTrials: valid.length,
+      medianOvershoot: values.length ? (values.length % 2 ? values[middle]! : (values[middle - 1]! + values[middle]!) / 2) : null,
+      maxOvershoot: values.length ? Math.max(...values) : null,
+      overshootTrials: values.filter(value => value > 0).length,
+      tokens: valid.map(trial => trial.totalTokens),
+    };
+  });
+  return {
+    schemaVersion: 1, requestCount: records.length, trialCount: trials.length,
+    validTrials: trials.filter(trial => trial.valid).length,
+    observedTokens: records.reduce((sum, record) => sum + (record.usage?.total ?? 0), 0),
+    missingUsage: records.filter(record => !record.usage && !(record.origin === "apim-limit" && record.rejectedBeforeBackend)).length,
+    evidenceSha256: createHash("sha256").update(requestsJsonl).digest("hex"), groups,
   };
 }

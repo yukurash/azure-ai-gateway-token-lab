@@ -7,6 +7,7 @@ import { scenarios } from "../src/experiment.js";
 import { recordFor } from "./fixtures.js";
 
 const cli = path.resolve("dist/src/report.js");
+const verifyCli = path.resolve("dist/src/verify-results.js");
 const temporary: string[] = [];
 function fixture(): { root: string; privateRoot: string; runId: string; run: string } {
   const root = mkdtempSync(path.join(tmpdir(), "token-lab-test-"));
@@ -53,6 +54,8 @@ describe("compiled reporting CLI", () => {
     expect(summary.trialCount).toBe(18);
     expect(summary.observedTokens).toBe(90);
     expect(summary.missingUsage).toBe(0);
+    expect(execFileSync(process.execPath, [verifyCli], { cwd: data.root, encoding: "utf8" }))
+      .toContain("18 requests and 18 trials");
     for (const name of ["requests.jsonl", "manifests.json", "trials.json", "trials.csv", "quota-overshoot.svg"]) {
       expect(readFileSync(path.join(data.root, "results", name), "utf8")).not.toMatch(/private-body|private-key|must-not-be-exported/);
     }
@@ -64,5 +67,41 @@ describe("compiled reporting CLI", () => {
     writeFileSync(path.join(data.run, "trials.jsonl"), "");
     expect(() => execFileSync(process.execPath, [cli, data.privateRoot, data.runId],
       { cwd: data.root, stdio: "pipe" })).toThrow();
+  });
+  it("rejects a modified public aggregate", () => {
+    const data = fixture();
+    execFileSync(process.execPath, [cli, data.privateRoot, data.runId], { cwd: data.root, stdio: "pipe" });
+    const file = path.join(data.root, "results", "summary.json");
+    const summary = JSON.parse(readFileSync(file, "utf8"));
+    summary.observedTokens++;
+    writeFileSync(file, JSON.stringify(summary));
+    expect(() => execFileSync(process.execPath, [verifyCli], { cwd: data.root, stdio: "pipe" })).toThrow();
+  });
+  it("exports deletion and cost evidence with timezone-safe elapsed hours", () => {
+    const data = fixture();
+    mkdirSync(path.join(data.privateRoot, "config"));
+    mkdirSync(path.join(data.root, "results"));
+    writeFileSync(path.join(data.privateRoot, "config", "azure-state.json"),
+      JSON.stringify({ createdAt: "2026-01-01T08:00:00Z", subscriptionId: "private-identifier" }));
+    writeFileSync(path.join(data.privateRoot, "config", "cleanup-verification.json"),
+      JSON.stringify({ deleted: true, verifiedAt: "2026-01-01T22:00:00+09:00" }));
+    const output = execFileSync(process.execPath, [path.resolve("dist/src/export-operations.js"), data.privateRoot],
+      { cwd: data.root, encoding: "utf8" });
+    expect(JSON.parse(output).elapsedHoursThroughDeletionVerification).toBe(5);
+    expect(JSON.parse(output).recordedRequestsIncludingPilots).toBe(18);
+    expect(output).not.toContain("private-identifier");
+  });
+  it("keeps pilot attempts separate and strips raw credentials", () => {
+    const data = fixture();
+    mkdirSync(path.join(data.root, "results"));
+    const manifestPath = path.join(data.run, "manifest.json");
+    const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+    manifest.profile = "pilot";
+    writeFileSync(manifestPath, JSON.stringify(manifest));
+    execFileSync(process.execPath, [path.resolve("dist/src/export-pilots.js"), data.privateRoot],
+      { cwd: data.root, stdio: "pipe" });
+    const output = readFileSync(path.join(data.root, "results", "pilot-requests.jsonl"), "utf8");
+    expect(output.trim().split("\n")).toHaveLength(18);
+    expect(output).not.toMatch(/private-body|private-key/);
   });
 });

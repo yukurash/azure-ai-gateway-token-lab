@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "requestCount": 795,
+  "trialCount": 72,
+  "validTrials": 72,
+  "observedTokens": 98808,
+  "missingUsage": 0,
+  "evidenceSha256": "4fb40ac810a0d5d176c7d15ac5d1b0ba24e6cb6ed717cd435b8544876f727ae9",
+  "groups": [
+    {
+      "scenarioId": "quota-normal-off-c1",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 120,
+      "maxOvershoot": 120,
+      "overshootTrials": 5,
+      "tokens": [
+        920,
+        920,
+        920,
+        920,
+        920
+      ]
+    },
+    {
+      "scenarioId": "quota-normal-off-c4",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 672,
+      "maxOvershoot": 672,
+      "overshootTrials": 5,
+      "tokens": [
+        1472,
+        1472,
+        1472,
+        1472,
+        1472
+      ]
+    },
+    {
+      "scenarioId": "quota-normal-off-c8",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 672,
+      "maxOvershoot": 672,
+      "overshootTrials": 5,
+      "tokens": [
+        1472,
+        1472,
+        1472,
+        1472,
+        1472
+      ]
+    },
+    {
+      "scenarioId": "quota-normal-on-c1",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 120,
+      "maxOvershoot": 120,
+      "overshootTrials": 5,
+      "tokens": [
+        920,
+        920,
+        920,
+        920,
+        920
+      ]
+    },
+    {
+      "scenarioId": "quota-normal-on-c4",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 672,
+      "maxOvershoot": 672,
+      "overshootTrials": 5,
+      "tokens": [
+        1472,
+        1472,
+        1472,
+        1472,
+        1472
+      ]
+    },
+    {
+      "scenarioId": "quota-normal-on-c8",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 672,
+      "maxOvershoot": 672,
+      "overshootTrials": 5,
+      "tokens": [
+        1472,
+        1472,
+        1472,
+        1472,
+        1472
+      ]
+    },
+    {
+      "scenarioId": "quota-stream-c1",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 120,
+      "maxOvershoot": 672,
+      "overshootTrials": 5,
+      "tokens": [
+        1472,
+        920,
+        920,
+        920,
+        920
+      ]
+    },
+    {
+      "scenarioId": "quota-stream-c4",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 672,
+      "maxOvershoot": 672,
+      "overshootTrials": 5,
+      "tokens": [
+        1472,
+        1472,
+        1472,
+        1472,
+        1472
+      ]
+    },
+    {
+      "scenarioId": "quota-stream-c8",
+      "trials": 5,
+      "validTrials": 5,
+      "medianOvershoot": 672,
+      "maxOvershoot": 672,
+      "overshootTrials": 5,
+      "tokens": [
+        1472,
+        1472,
+        1472,
+        1472,
+        1472
+      ]
+    }
+  ]
+}

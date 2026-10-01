@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "dedicatedResourceGroupDeleted": true,
+  "deletionVerifiedAt": "2026-10-01T13:31:58.4543256Z",
+  "createdAt": "2026-10-01T08:33:48.5206149Z",
+  "elapsedHoursThroughDeletionVerification": 4.969426111111111,
+  "recordedRequestsIncludingPilots": 851,
+  "successfulModelRequestsIncludingPilots": 579,
+  "observedPromptTokensIncludingPilots": 32424,
+  "observedCompletionTokensIncludingPilots": 74112,
+  "pricesJPY": {
+    "apimPerHour": 10.3668,
+    "modelInputPer1000": 0.0763,
+    "modelOutputPer1000": 0.305
+  },
+  "modelRetailEstimateYen": 25.078111199999995,
+  "apimRetailEstimateYen": 51.51704660866666,
+  "roundedHourRetailEstimateYen": 76.9121112,
+  "invoiceStatus": "Not confirmed. Retail estimate, not a bill; taxes and contract prices excluded. Input cache discounts ignored.",
+  "networkException": "Client IP restriction disabled with owner approval; subscription-key authentication retained and missing-key 401 verified."
+}
