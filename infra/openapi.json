@@ -1,0 +1,43 @@
+{
+  "openapi": "3.0.1",
+  "info": { "title": "OpenAI chat completions token lab", "version": "1.0" },
+  "paths": {
+    "/chat/completions": {
+      "post": {
+        "operationId": "chat-completions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["messages"],
+                "properties": {
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["role", "content"],
+                      "properties": {
+                        "role": { "type": "string" },
+                        "content": { "type": "string" }
+                      }
+                    }
+                  },
+                  "max_tokens": { "type": "integer" },
+                  "temperature": { "type": "number" },
+                  "stream": { "type": "boolean" },
+                  "stream_options": {
+                    "type": "object",
+                    "properties": { "include_usage": { "type": "boolean" } }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Chat completion or SSE stream" } }
+      }
+    }
+  }
+}
