@@ -35,6 +35,15 @@ const matrix = scenarios(profile);
 const dirty = execFileSync("git", ["status", "--porcelain"], { encoding: "utf8" }).trim();
 if (profile !== "pilot" && dirty) throw new Error("Measured runs require a clean committed worktree");
 const config = configFrom(loadJson(path.join(root, "config", "client.json")));
+if (profile !== "pilot") {
+  const protocol = loadJson(path.join(repository, "experiments", "protocol.json"));
+  if (!isObject(protocol) || protocol.status !== "frozen" ||
+      protocol.quotaTokens !== config.quotaTokens || protocol.rateTokens !== config.rateTokens ||
+      protocol.apiVersion !== config.apiVersion || protocol.restrictClientIp !== config.restrictClientIp ||
+      protocol.maxTokens !== requestBody(false).max_tokens || protocol.temperature !== requestBody(false).temperature) {
+    throw new Error("Private settings do not match the frozen experiment protocol");
+  }
+}
 const runId = randomUUID();
 const runDir = path.join(root, "runs", runId);
 mkdirSync(runDir, { recursive: true });

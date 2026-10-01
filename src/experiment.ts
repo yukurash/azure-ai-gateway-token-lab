@@ -88,7 +88,7 @@ export function scenarios(profile: string): Scenario[] {
   if (profile === "pilot") {
     return [
       { id: "pilot-normal", variant: "baseline", stream: false, concurrency: 1, maxRequests: 1, repetitions: 1 },
-      { id: "pilot-stream", variant: "baseline", stream: true, concurrency: 1, maxRequests: 1, repetitions: 1 },
+      { id: "pilot-baseline-stream", variant: "baseline", stream: true, concurrency: 1, maxRequests: 1, repetitions: 1 },
       ...modes.map(mode => ({ id: `pilot-${mode.name}`, variant: `quota-${mode.suffix}` as const,
         stream: mode.stream, concurrency: 1, maxRequests: 10, repetitions: 1 })),
     ];

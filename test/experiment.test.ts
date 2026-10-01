@@ -72,6 +72,7 @@ describe("bounded experiment", () => {
     expect(scenarios("control").reduce((sum, item) => sum + item.repetitions, 0)).toBe(18);
     expect(scenarios("rate").reduce((sum, item) => sum + item.repetitions, 0)).toBe(9);
     expect(scenarios("pilot").reduce((sum, item) => sum + item.maxRequests, 0)).toBe(32);
+    expect(new Set(scenarios("pilot").map(item => item.id)).size).toBe(scenarios("pilot").length);
     expect(() => scenarios("typo")).toThrow("Unknown");
   });
 });
