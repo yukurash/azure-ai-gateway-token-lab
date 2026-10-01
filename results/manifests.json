@@ -1,0 +1,197 @@
+[
+  {
+    "schemaVersion": 1,
+    "experimentId": "d3e1da40-0e38-4aa6-a011-a14c41a9d467",
+    "profile": "control",
+    "createdAt": "2026-10-01T13:17:55.522Z",
+    "sourceCommit": "909ef9dd207a6bd5fb905503baf8324d4dd48dbe",
+    "model": "gpt-4.1-mini",
+    "modelVersion": "2025-04-14",
+    "region": "japaneast",
+    "gateway": "Developer classic (1 unit)",
+    "apiVersion": "2024-10-21",
+    "quotaTokens": 800,
+    "rateTokens": 1200,
+    "restrictClientIp": false,
+    "scenarios": [
+      {
+        "id": "control-normal-c1",
+        "variant": "baseline",
+        "stream": false,
+        "concurrency": 1,
+        "maxRequests": 2,
+        "repetitions": 3
+      },
+      {
+        "id": "control-normal-c4",
+        "variant": "baseline",
+        "stream": false,
+        "concurrency": 4,
+        "maxRequests": 8,
+        "repetitions": 3
+      },
+      {
+        "id": "control-normal-c8",
+        "variant": "baseline",
+        "stream": false,
+        "concurrency": 8,
+        "maxRequests": 16,
+        "repetitions": 3
+      },
+      {
+        "id": "control-stream-c1",
+        "variant": "baseline",
+        "stream": true,
+        "concurrency": 1,
+        "maxRequests": 2,
+        "repetitions": 3
+      },
+      {
+        "id": "control-stream-c4",
+        "variant": "baseline",
+        "stream": true,
+        "concurrency": 4,
+        "maxRequests": 8,
+        "repetitions": 3
+      },
+      {
+        "id": "control-stream-c8",
+        "variant": "baseline",
+        "stream": true,
+        "concurrency": 8,
+        "maxRequests": 16,
+        "repetitions": 3
+      }
+    ]
+  },
+  {
+    "schemaVersion": 1,
+    "experimentId": "e44ea3c9-6ef9-429a-ac34-ef4914cfea52",
+    "profile": "quota",
+    "createdAt": "2026-10-01T13:19:34.163Z",
+    "sourceCommit": "909ef9dd207a6bd5fb905503baf8324d4dd48dbe",
+    "model": "gpt-4.1-mini",
+    "modelVersion": "2025-04-14",
+    "region": "japaneast",
+    "gateway": "Developer classic (1 unit)",
+    "apiVersion": "2024-10-21",
+    "quotaTokens": 800,
+    "rateTokens": 1200,
+    "restrictClientIp": false,
+    "scenarios": [
+      {
+        "id": "quota-normal-off-c1",
+        "variant": "quota-off",
+        "stream": false,
+        "concurrency": 1,
+        "maxRequests": 64,
+        "repetitions": 5
+      },
+      {
+        "id": "quota-normal-off-c4",
+        "variant": "quota-off",
+        "stream": false,
+        "concurrency": 4,
+        "maxRequests": 64,
+        "repetitions": 5
+      },
+      {
+        "id": "quota-normal-off-c8",
+        "variant": "quota-off",
+        "stream": false,
+        "concurrency": 8,
+        "maxRequests": 64,
+        "repetitions": 5
+      },
+      {
+        "id": "quota-normal-on-c1",
+        "variant": "quota-on",
+        "stream": false,
+        "concurrency": 1,
+        "maxRequests": 64,
+        "repetitions": 5
+      },
+      {
+        "id": "quota-normal-on-c4",
+        "variant": "quota-on",
+        "stream": false,
+        "concurrency": 4,
+        "maxRequests": 64,
+        "repetitions": 5
+      },
+      {
+        "id": "quota-normal-on-c8",
+        "variant": "quota-on",
+        "stream": false,
+        "concurrency": 8,
+        "maxRequests": 64,
+        "repetitions": 5
+      },
+      {
+        "id": "quota-stream-c1",
+        "variant": "quota-on",
+        "stream": true,
+        "concurrency": 1,
+        "maxRequests": 64,
+        "repetitions": 5
+      },
+      {
+        "id": "quota-stream-c4",
+        "variant": "quota-on",
+        "stream": true,
+        "concurrency": 4,
+        "maxRequests": 64,
+        "repetitions": 5
+      },
+      {
+        "id": "quota-stream-c8",
+        "variant": "quota-on",
+        "stream": true,
+        "concurrency": 8,
+        "maxRequests": 64,
+        "repetitions": 5
+      }
+    ]
+  },
+  {
+    "schemaVersion": 1,
+    "experimentId": "808fd635-e4eb-4524-b526-b6e1632a60d4",
+    "profile": "rate",
+    "createdAt": "2026-10-01T13:24:58.079Z",
+    "sourceCommit": "909ef9dd207a6bd5fb905503baf8324d4dd48dbe",
+    "model": "gpt-4.1-mini",
+    "modelVersion": "2025-04-14",
+    "region": "japaneast",
+    "gateway": "Developer classic (1 unit)",
+    "apiVersion": "2024-10-21",
+    "quotaTokens": 800,
+    "rateTokens": 1200,
+    "restrictClientIp": false,
+    "scenarios": [
+      {
+        "id": "rate-normal-off",
+        "variant": "rate-off",
+        "stream": false,
+        "concurrency": 1,
+        "maxRequests": 64,
+        "repetitions": 3
+      },
+      {
+        "id": "rate-normal-on",
+        "variant": "rate-on",
+        "stream": false,
+        "concurrency": 1,
+        "maxRequests": 64,
+        "repetitions": 3
+      },
+      {
+        "id": "rate-stream",
+        "variant": "rate-on",
+        "stream": true,
+        "concurrency": 1,
+        "maxRequests": 64,
+        "repetitions": 3
+      }
+    ]
+  }
+]

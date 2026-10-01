@@ -1,0 +1,141 @@
+[
+  {
+    "experimentId": "1fbba67a-7ce0-43ac-940f-7b8a378f50f1",
+    "createdAt": "2026-10-01T13:07:46.736Z",
+    "sourceCommit": "3113c92574efb656ccc34000782989fd51348b3e",
+    "dirty": false,
+    "quotaTokens": 1200,
+    "requestCount": 30,
+    "trials": [
+      {
+        "trialId": "c5f371f1-dfd3-4ea0-bc38-f63eac23f80a",
+        "scenarioId": "pilot-normal",
+        "valid": true,
+        "invalidReasons": []
+      },
+      {
+        "trialId": "ccb5c9d8-fe70-4a03-9a49-c20b3025378e",
+        "scenarioId": "pilot-stream",
+        "valid": true,
+        "invalidReasons": []
+      },
+      {
+        "trialId": "2a193531-1f37-4929-8c7c-424c3b0b41c9",
+        "scenarioId": "pilot-normal-off",
+        "valid": true,
+        "invalidReasons": []
+      },
+      {
+        "trialId": "9597e61c-c5f3-4890-be18-65f289a6b617",
+        "scenarioId": "pilot-normal-on",
+        "valid": true,
+        "invalidReasons": []
+      },
+      {
+        "trialId": "4944902a-5c2c-4539-9194-c631e8f4050a",
+        "scenarioId": "pilot-stream",
+        "valid": false,
+        "invalidReasons": [
+          "post_limit_probe_not_rejected"
+        ]
+      }
+    ]
+  },
+  {
+    "experimentId": "2134478b-6551-4485-84af-fc11464dc2d6",
+    "createdAt": "2026-10-01T09:12:05.186Z",
+    "sourceCommit": "5b42b54df7fcf92a94bfb20b4950a1c81e8b4307",
+    "dirty": false,
+    "quotaTokens": 1200,
+    "requestCount": 1,
+    "trials": [
+      {
+        "trialId": "ae68e34f-fa2b-4585-9401-9a7b6100f5f6",
+        "scenarioId": "pilot-normal",
+        "valid": false,
+        "invalidReasons": [
+          "http_error",
+          "origin_apim-other"
+        ]
+      }
+    ]
+  },
+  {
+    "experimentId": "25afc9cb-16c7-45c7-8f1d-5fb32db3797c",
+    "createdAt": "2026-10-01T09:08:46.199Z",
+    "sourceCommit": "5b42b54df7fcf92a94bfb20b4950a1c81e8b4307",
+    "dirty": false,
+    "quotaTokens": 1200,
+    "requestCount": 1,
+    "trials": [
+      {
+        "trialId": "de14adf0-a36e-4039-a016-e0c5a00238ed",
+        "scenarioId": "pilot-normal",
+        "valid": false,
+        "invalidReasons": [
+          "http_error",
+          "origin_apim-other"
+        ]
+      }
+    ]
+  },
+  {
+    "experimentId": "c84bde8a-373a-4fcf-a6fa-9f55d2b7e40a",
+    "createdAt": "2026-10-01T09:16:22.964Z",
+    "sourceCommit": "5b42b54df7fcf92a94bfb20b4950a1c81e8b4307",
+    "dirty": true,
+    "quotaTokens": 1200,
+    "requestCount": 1,
+    "trials": [
+      {
+        "trialId": "3456abe8-97aa-42d5-9ddf-53b9d9f1e5d8",
+        "scenarioId": "pilot-normal",
+        "valid": false,
+        "invalidReasons": [
+          "http_error",
+          "origin_apim-other"
+        ]
+      }
+    ]
+  },
+  {
+    "experimentId": "d6b2e082-5ddf-438b-aa68-c7ce959d2669",
+    "createdAt": "2026-10-01T13:13:28.779Z",
+    "sourceCommit": "3113c92574efb656ccc34000782989fd51348b3e",
+    "dirty": true,
+    "quotaTokens": 800,
+    "requestCount": 23,
+    "trials": [
+      {
+        "trialId": "542f6c1c-dedb-4efa-a4b1-44442bb76cd8",
+        "scenarioId": "pilot-normal",
+        "valid": true,
+        "invalidReasons": []
+      },
+      {
+        "trialId": "25a9f3c0-88af-4974-8743-83f83302b9cd",
+        "scenarioId": "pilot-baseline-stream",
+        "valid": true,
+        "invalidReasons": []
+      },
+      {
+        "trialId": "01e908d0-fbc3-435d-b167-57db2ca1bee1",
+        "scenarioId": "pilot-normal-off",
+        "valid": true,
+        "invalidReasons": []
+      },
+      {
+        "trialId": "deacf986-38ec-4894-9406-12caf063fbba",
+        "scenarioId": "pilot-normal-on",
+        "valid": true,
+        "invalidReasons": []
+      },
+      {
+        "trialId": "406edacb-888e-4ded-a64f-014cb7008efe",
+        "scenarioId": "pilot-stream",
+        "valid": true,
+        "invalidReasons": []
+      }
+    ]
+  }
+]

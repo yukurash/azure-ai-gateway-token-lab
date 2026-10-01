@@ -1,7 +1,6 @@
-import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { parseRecord, sanitize, summarize } from "./evidence.js";
+import { aggregate, parseRecord, sanitize, summarize } from "./evidence.js";
 import { isObject, type PublicRecord } from "./types.js";
 import { scenarios } from "./experiment.js";
 
@@ -123,30 +122,12 @@ for (const runId of runIds) {
     scenarios: expected,
   });
 }
-const groups = [...new Set(trials.filter(trial => trial.profile === "quota").map(trial => trial.scenarioId))].map(scenarioId => {
-  const group = trials.filter(trial => trial.scenarioId === scenarioId);
-  const valid = group.filter(trial => trial.valid && trial.overshoot !== null);
-  const overshoots = valid.map(trial => trial.overshoot!);
-  return {
-    scenarioId, trials: group.length, validTrials: valid.length,
-    medianOvershoot: overshoots.length ? median(overshoots) : null,
-    maxOvershoot: overshoots.length ? Math.max(...overshoots) : null,
-    overshootTrials: overshoots.filter(value => value > 0).length,
-    tokens: valid.map(trial => trial.totalTokens),
-  };
-});
 const requestsJsonl = allRecords.map(record => JSON.stringify(record)).join("\n") + "\n";
 writeFileSync(path.join(output, "requests.jsonl"), requestsJsonl);
 writeFileSync(path.join(output, "trials.json"), JSON.stringify(trials, null, 2) + "\n");
 writeFileSync(path.join(output, "manifests.json"), JSON.stringify(manifests, null, 2) + "\n");
-const summary = {
-  schemaVersion: 1, requestCount: allRecords.length, trialCount: trials.length,
-  validTrials: trials.filter(trial => trial.valid).length,
-  observedTokens: allRecords.reduce((sum, record) => sum + (record.usage?.total ?? 0), 0),
-  missingUsage: allRecords.filter(record => !record.usage && !record.rejectedBeforeBackend).length,
-  evidenceSha256: createHash("sha256").update(requestsJsonl).digest("hex"),
-  groups,
-};
+const summary = aggregate(allRecords, trials, requestsJsonl);
+const { groups } = summary;
 writeFileSync(path.join(output, "summary.json"), JSON.stringify(summary, null, 2) + "\n");
 const columns = ["scenarioId", "repetition", "valid", "requestCount", "totalTokens", "overshoot", "peakStartSkewMs"] as const;
 writeFileSync(path.join(output, "trials.csv"), [

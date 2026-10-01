@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="605" viewBox="0 0 920 605">
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="sans-serif" font-size="14" fill="#172033">
+<text x="24" y="28" font-size="20">Observed quota overshoot (tokens)</text>
+<text x="24" y="51">Each point is one independent counter trial; no missing values are imputed.</text>
+<text x="24" y="93">quota-normal-off-c1</text>
+<line x1="290" y1="88" x2="820" y2="88" stroke="#d7dce3"/>
+<circle cx="384.6" cy="80" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="84" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="88" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="92" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="96" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="93">n=5</text>
+<text x="24" y="148">quota-normal-off-c4</text>
+<line x1="290" y1="143" x2="820" y2="143" stroke="#d7dce3"/>
+<circle cx="820.0" cy="135" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="139" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="143" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="147" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="151" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="148">n=5</text>
+<text x="24" y="203">quota-normal-off-c8</text>
+<line x1="290" y1="198" x2="820" y2="198" stroke="#d7dce3"/>
+<circle cx="820.0" cy="190" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="194" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="198" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="202" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="206" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="203">n=5</text>
+<text x="24" y="258">quota-normal-on-c1</text>
+<line x1="290" y1="253" x2="820" y2="253" stroke="#d7dce3"/>
+<circle cx="384.6" cy="245" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="249" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="253" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="257" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="261" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="258">n=5</text>
+<text x="24" y="313">quota-normal-on-c4</text>
+<line x1="290" y1="308" x2="820" y2="308" stroke="#d7dce3"/>
+<circle cx="820.0" cy="300" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="304" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="308" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="312" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="316" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="313">n=5</text>
+<text x="24" y="368">quota-normal-on-c8</text>
+<line x1="290" y1="363" x2="820" y2="363" stroke="#d7dce3"/>
+<circle cx="820.0" cy="355" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="359" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="363" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="367" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="371" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="368">n=5</text>
+<text x="24" y="423">quota-stream-c1</text>
+<line x1="290" y1="418" x2="820" y2="418" stroke="#d7dce3"/>
+<circle cx="820.0" cy="410" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="414" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="418" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="422" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="384.6" cy="426" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="423">n=5</text>
+<text x="24" y="478">quota-stream-c4</text>
+<line x1="290" y1="473" x2="820" y2="473" stroke="#d7dce3"/>
+<circle cx="820.0" cy="465" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="469" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="473" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="477" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="481" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="478">n=5</text>
+<text x="24" y="533">quota-stream-c8</text>
+<line x1="290" y1="528" x2="820" y2="528" stroke="#d7dce3"/>
+<circle cx="820.0" cy="520" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="524" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="528" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="532" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<circle cx="820.0" cy="536" r="4" fill="#2463b4" fill-opacity="0.75"/>
+<text x="835" y="533">n=5</text>
+<text x="287" y="593">0</text><text x="780" y="593">672</text></g></svg>
