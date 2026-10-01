@@ -1,7 +1,8 @@
 param(
     [Parameter(Mandatory)][string]$SubscriptionId,
     [Parameter(Mandatory)][string]$PrivateRoot,
-    [Parameter(Mandatory)][ValidatePattern('^[a-z0-9-]{5,24}$')][string]$Suffix
+    [Parameter(Mandatory)][ValidatePattern('^[a-z0-9-]{5,24}$')][string]$Suffix,
+    [string]$AllowedIp
 )
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
@@ -16,7 +17,7 @@ if ($exists -ne 'false') { throw 'Refusing to reuse an existing resource group.'
 $account = az account show --subscription $SubscriptionId --output json | ConvertFrom-Json
 if ($account.id -ne $SubscriptionId -or $account.state -ne 'Enabled') { throw 'Subscription verification failed.' }
 $publisher = az ad signed-in-user show --query userPrincipalName --output tsv
-$ip = (Invoke-RestMethod 'https://api4.ipify.org').Trim()
+$ip = if ($AllowedIp) { $AllowedIp.Trim() } else { (Invoke-RestMethod 'https://api4.ipify.org').Trim() }
 if (-not [Net.IPAddress]::TryParse($ip, [ref]([Net.IPAddress]$null))) { throw 'Could not resolve source IP.' }
 New-Item -ItemType Directory -Force -Path (Join-Path $private 'config') | Out-Null
 $parameters = @{
