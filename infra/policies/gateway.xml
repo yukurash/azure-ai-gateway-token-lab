@@ -1,0 +1,35 @@
+<policies>
+  <inbound>
+    <base />
+    <ip-filter action="allow" id="lab-ip-filter">
+      <address>__ALLOWED_IP__</address>
+    </ip-filter>
+    <choose>
+      <when condition="@(!System.Text.RegularExpressions.Regex.IsMatch(context.Request.Headers.GetValueOrDefault(&quot;x-lab-counter&quot;, &quot;&quot;), &quot;^[a-z0-9-]{8,80}$&quot;))">
+        <return-response>
+          <set-status code="400" reason="Invalid experiment counter" />
+          <set-header name="x-lab-origin" exists-action="override"><value>input</value></set-header>
+        </return-response>
+      </when>
+    </choose>
+    __LIMIT_POLICY__
+    <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
+    <set-header name="Ocp-Apim-Subscription-Key" exists-action="delete" />
+    <set-header name="x-lab-counter" exists-action="delete" />
+  </inbound>
+  <backend>
+    <forward-request buffer-response="false" timeout="120" />
+  </backend>
+  <outbound>
+    <base />
+    <set-header name="x-lab-origin" exists-action="override"><value>backend</value></set-header>
+    <set-header name="x-lab-backend-status" exists-action="override"><value>@(context.Response.StatusCode.ToString())</value></set-header>
+  </outbound>
+  <on-error>
+    <base />
+    <set-header name="x-lab-origin" exists-action="override"><value>apim-error</value></set-header>
+    <set-header name="x-lab-error-policy" exists-action="override"><value>@(context.LastError.PolicyId ?? "")</value></set-header>
+    <set-header name="x-lab-error-source" exists-action="override"><value>@(context.LastError.Source ?? "")</value></set-header>
+    <set-header name="x-lab-error-reason" exists-action="override"><value>@(context.LastError.Reason ?? "")</value></set-header>
+  </on-error>
+</policies>
