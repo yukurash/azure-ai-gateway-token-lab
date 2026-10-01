@@ -12,7 +12,9 @@
         </return-response>
       </when>
     </choose>
+    <set-variable name="lab-counter" value="@(context.Request.Headers.GetValueOrDefault(&quot;x-lab-counter&quot;, &quot;&quot;))" />
     __LIMIT_POLICY__
+    <set-variable name="lab-limit-passed" value="@(true)" />
     <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
     <set-header name="Ocp-Apim-Subscription-Key" exists-action="delete" />
     <set-header name="x-lab-counter" exists-action="delete" />
@@ -31,5 +33,7 @@
     <set-header name="x-lab-error-policy" exists-action="override"><value>@(context.LastError.PolicyId ?? "")</value></set-header>
     <set-header name="x-lab-error-source" exists-action="override"><value>@(context.LastError.Source ?? "")</value></set-header>
     <set-header name="x-lab-error-reason" exists-action="override"><value>@(context.LastError.Reason ?? "")</value></set-header>
+    <set-header name="x-lab-error-section" exists-action="override"><value>@(context.LastError.Section ?? "")</value></set-header>
+    <set-header name="x-lab-limit-passed" exists-action="override"><value>@(context.Variables.GetValueOrDefault&lt;bool&gt;("lab-limit-passed", false).ToString())</value></set-header>
   </on-error>
 </policies>
